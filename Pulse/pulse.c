@@ -4,7 +4,10 @@
 
 #include "pulse.h"
 
+/* Uncomment to run at 1,000HZ */
 /* #define HZ1000  HZ1000 */
+
+/* Uncomment to run at 10,000HZ */
 #define HZ10000 HZ10000
 
 #ifdef HZ1000
@@ -17,6 +20,7 @@
     #define SET_TCNT0  TCNT0 = 155;
 #endif
 
+/* Detect overrun situations and lock ourselves out */
 volatile uint8_t lock = 0;
 
 void setLED(uint8_t value)
