@@ -35,13 +35,13 @@ blink = do
 
     -- Decrements the toggle counter when it
     -- is greater than 0.
-    period 1 $ atom "decrement" $ do
+    atom "decrement" $ do
         cond $ value toggle >. 0
         toggle <== value toggle - 1
 
     -- Checks if we need to perform a toggle
     -- reset, and performs it when we need one.
-    period 2 $ atom "reset" $ do
+    atom "reset" $ do
         cond $ value doReset
         doReset <== Const False
         toggle  <== Const delayCycles
@@ -49,7 +49,7 @@ blink = do
     -- Checks if the toggle counter has expired.
     -- Toggles the LED if it has, then requests
     -- a reset.
-    period 2 $ atom "flip" $ do
+    atom "flip" $ do
         cond $ value toggle <=. 0
         setLED isOn
         isOn <== (not_ $ value isOn)
