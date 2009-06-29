@@ -1,0 +1,16 @@
+digraph G {
+
+    rankdir=LR;
+
+    subgraph cluster_0 {
+        label = "LwDSL"
+        "Abstract Syntax Tree" -> "Optimizer"
+        "Optimizer" -> "Target Output"
+        "Optimizer" -> "Interpreted Output"
+    }
+
+    "Grammar" -> "Lexer"
+    "Lexer" -> "Parser"
+    "Parser" -> "Abstract Syntax Tree"
+
+}
