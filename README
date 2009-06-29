@@ -1,0 +1,6 @@
+This is actually a collection of programs that use/implement domain
+specific languages or lightweight/embedded domain specific languages.
+
+It just so happens that Atom is a very good one, and I'm using an Arduino
+board for many of these. Don't be surprised to see things discussing stuff
+that doesn't relate to Atom or Arduinos!
