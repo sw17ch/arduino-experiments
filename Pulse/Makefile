@@ -76,11 +76,11 @@ $(PRG).elf: $(OBJ)
 # dependency:
 pulse.o: pulse.c pulse.h
 pulse_atom.c: pulse.hs
-	/usr/bin/runhaskell -Wall pulse.hs
+	runhaskell -Wall pulse.hs
 pulse_atom.o: pulse_atom.c pulse.h
 
 flash: pulse.hex
-	/usr/bin/avrdude -p m168 -P /dev/ttyUSB0 -c stk500v1 -b 19200 -F -u -U flash:w:pulse.hex
+	avrdude -p m168 -P /dev/ttyUSB0 -c stk500v1 -b 19200 -F -u -U flash:w:pulse.hex
 
 clean:
 	rm -rf *.o $(PRG).elf *.eps *.png *.pdf *.bak 

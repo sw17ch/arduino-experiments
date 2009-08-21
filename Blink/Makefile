@@ -76,11 +76,11 @@ $(PRG).elf: $(OBJ)
 # dependency:
 blink.o: blink.c blink.h
 blink_atom.c: blink.hs
-	/usr/bin/runhaskell blink.hs
+	runhaskell blink.hs
 blink_atom.o: blink_atom.c blink.h
 
 flash: blink.hex
-	/usr/bin/avrdude -p m168 -P /dev/ttyUSB0 -c stk500v1 -b 19200 -F -u -U flash:w:blink.hex
+	avrdude -p m168 -P /dev/ttyUSB0 -c stk500v1 -b 19200 -F -u -U flash:w:blink.hex
 
 clean:
 	rm -rf *.o $(PRG).elf *.eps *.png *.pdf *.bak 
