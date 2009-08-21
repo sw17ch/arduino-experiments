@@ -15,7 +15,7 @@ cfg = defaults {
 
 -- Main just has to compile the Atom expression
 main :: IO ()
-main = compile "blink_atom" cfg blink
+main = compile "blink_atom" cfg blink >> return ()
 
 -- How many milliseconds before we flip the LED?
 delayCycles :: Word16

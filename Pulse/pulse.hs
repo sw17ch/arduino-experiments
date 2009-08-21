@@ -9,7 +9,7 @@ cfg = defaults {
 }
 
 main :: IO ()
-main = compile "pulse_atom" cfg pulse
+main = compile "pulse_atom" cfg pulse >> return ()
 
 pulse :: Atom ()
 pulse = do
