@@ -6,7 +6,7 @@ import Data.Word
 -- Override some default values
 cfg = defaults {
     -- This pulls some stuff in we use below.
-    cPreCode = "#include \"blink.h\"",
+    cCode = (\_ _ _ -> ("#include \"blink.h\"","")),
 
     -- The (u)intXX_t types are defined in
     -- stdint.h--which we include from blink.h
