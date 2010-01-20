@@ -6,7 +6,7 @@
 
 void setLED(uint8_t value)
 {
-    PORTB = (!!value) << PB5;
+    PORTB = (!!value) << PINB5; /* PB5 on the atmega168 */
 }
 
 /* This should be called 1000 times/second. */
