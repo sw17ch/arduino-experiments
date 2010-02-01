@@ -1,57 +1,9 @@
 PRG            = blink
 OBJ            = blink.o blink_atom.o
-#MCU_TARGET     = at90s2313
-#MCU_TARGET     = at90s2333
-#MCU_TARGET     = at90s4414
-#MCU_TARGET     = at90s4433
-#MCU_TARGET     = at90s4434
-#MCU_TARGET     = at90s8515
-#MCU_TARGET     = at90s8535
-#MCU_TARGET     = atmega128
-#MCU_TARGET     = atmega1280
-#MCU_TARGET     = atmega1281
-#MCU_TARGET     = atmega1284p
-#MCU_TARGET     = atmega16
-#MCU_TARGET     = atmega163
-#MCU_TARGET     = atmega164p
-#MCU_TARGET     = atmega165
-#MCU_TARGET     = atmega165p
+
 #MCU_TARGET     = atmega168
-#MCU_TARGET     = atmega169
-#MCU_TARGET     = atmega169p
-#MCU_TARGET     = atmega2560
-#MCU_TARGET     = atmega2561
-#MCU_TARGET     = atmega32
-#MCU_TARGET     = atmega324p
-#MCU_TARGET     = atmega325
-#MCU_TARGET     = atmega3250
 MCU_TARGET     = atmega328p
-#MCU_TARGET     = atmega329
-#MCU_TARGET     = atmega3290
-#MCU_TARGET     = atmega48
-#MCU_TARGET     = atmega64
-#MCU_TARGET     = atmega640
-#MCU_TARGET     = atmega644
-#MCU_TARGET     = atmega644p
-#MCU_TARGET     = atmega645
-#MCU_TARGET     = atmega6450
-#MCU_TARGET     = atmega649
-#MCU_TARGET     = atmega6490
-#MCU_TARGET     = atmega8
-#MCU_TARGET     = atmega8515
-#MCU_TARGET     = atmega8535
-#MCU_TARGET     = atmega88
-#MCU_TARGET     = attiny2313
-#MCU_TARGET     = attiny24
-#MCU_TARGET     = attiny25
-#MCU_TARGET     = attiny26
-#MCU_TARGET     = attiny261
-#MCU_TARGET     = attiny44
-#MCU_TARGET     = attiny45
-#MCU_TARGET     = attiny461
-#MCU_TARGET     = attiny84
-#MCU_TARGET     = attiny85
-#MCU_TARGET     = attiny861
+
 OPTIMIZE       = -O2
 
 DEFS           = -DF_CPU=16000000
@@ -81,7 +33,8 @@ blink_atom.c: blink.hs
 blink_atom.o: blink_atom.c blink.h
 
 flash: blink.hex
-	avrdude -p m168 -P /dev/ttyUSB0 -c stk500v1 -b 19200 -F -u -U flash:w:blink.hex
+	./pulsedtr.py /dev/ttyUSB0
+	avrdude -p $(MCU_TARGET) -c stk500v1  -P /dev/ttyUSB0 -b 57600 -D -U flash:w:blink.hex:i
 
 clean:
 	rm -rf *.o $(PRG).elf *.eps *.png *.pdf *.bak 
