@@ -1,4 +1,3 @@
-{-# LANGUAGE GADTs #-}
 module AVR where
 
 import Text.Printf
@@ -87,76 +86,104 @@ mkHWd k = if 0x00 <= k && k <= 0x0F
             else error $ "I:nvalid half word: " ++ (show k)
 
 -- Definition of an Instruction Set Architecture
-data ISA where {
-    ADC    :: GPR -> GPR -> ISA;
-    ADD    :: GPR -> GPR -> ISA;
-    ADIW   :: GPR -> Imd -> ISA;
-    AND    :: GPR -> GPR -> ISA;
-    ANDI   :: GPR -> Wrd -> ISA;
-    ASR    :: GPR        -> ISA;
-    BCLR   :: Bit        -> ISA;
-    BLD    :: GPR -> Bit -> ISA;
-    BRBC   :: Bit -> BrK -> ISA;
-    BRBS   :: Bit -> BrK -> ISA;
-    BRCC   :: BrK        -> ISA;
-    BRCS   :: BrK        -> ISA;
-    BREAK  ::               ISA;
-    BREQ   :: BrK        -> ISA;
-    BRGE   :: BrK        -> ISA;
-    BRHC   :: BrK        -> ISA;
-    BRHS   :: BrK        -> ISA;
-    BRID   :: BrK        -> ISA;
-    BRIE   :: BrK        -> ISA;
-    BRLO   :: BrK        -> ISA;
-    BRLT   :: BrK        -> ISA;
-    BRMI   :: BrK        -> ISA;
-    BRNE   :: BrK        -> ISA;
-    BRPL   :: BrK        -> ISA;
-    BRSH   :: BrK        -> ISA;
-    BRTC   :: BrK        -> ISA;
-    BRTS   :: BrK        -> ISA;
-    BRVC   :: BrK        -> ISA;
-    BRVS   :: BrK        -> ISA;
-    BSET   :: Bit        -> ISA;
-    BST    :: GPR -> Bit -> ISA;
-    CALL   :: Adr        -> ISA;
-    CBI    :: IOR -> Bit -> ISA;
-    CBR    :: GPR -> Wrd -> ISA;
-    CLC    ::               ISA;
-    CLH    ::               ISA;
-    CLI    ::               ISA;
-    CLN    ::               ISA;
-    CLR    :: GPR        -> ISA;
-    CLS    ::               ISA;
-    CLT    ::               ISA;
-    CLV    ::               ISA;
-    CLZ    ::               ISA;
-    COM    :: GPR        -> ISA;
-    CP     :: GPR -> GPR -> ISA;
-    CPC    :: GPR -> GPR -> ISA;
-    CPI    :: GPR -> Wrd -> ISA;
-    CPSE   :: GPR -> GPR -> ISA;
-    DEC    :: GPR        -> ISA;
-    DES    :: HWd        -> ISA;
-    EICALL ::               ISA;
-    EIJMP  ::               ISA;
-    ELPM0  ::               ISA; -- None, R0 implied 
-    ELPMZ  :: GPR -> Z   -> ISA; -- Rd and either Z or Z+
-    EOR    :: GPR -> GPR -> ISA;
-    FMUL   :: GPR -> GPR -> ISA;
-    FMULS  :: GPR -> GPR -> ISA;
-    FMULSU :: GPR -> GPR -> ISA;
-    ICALL  ::               ISA;
-    IJMP   ::               ISA;
-    IN     :: GPR -> IOR -> ISA;
-    INC    :: GPR        -> ISA;
-    JMP    :: Adr        -> ISA;
-    LDX    :: GPR -> X   -> ISA; -- LD using X register
-    LDDX   :: GPR -> LdQ -> ISA; -- LDD using X register
-    LDY    :: GPR -> Y   -> ISA; -- LD using Y register
-    LDDY   :: GPR -> LdQ -> ISA; -- LDD using Y register
-    LDI    :: GPR -> Wrd -> ISA
-}
+data ISA
+    = ADC    GPR GPR
+    | ADD    GPR GPR
+    | ADIW   GPR Imd
+    | AND    GPR GPR
+    | ANDI   GPR Wrd
+    | ASR    GPR    
+    | BCLR   Bit    
+    | BLD    GPR Bit
+    | BRBC   Bit BrK
+    | BRBS   Bit BrK
+    | BRCC   BrK    
+    | BRCS   BrK    
+    | BREAK         
+    | BREQ   BrK    
+    | BRGE   BrK    
+    | BRHC   BrK    
+    | BRHS   BrK    
+    | BRID   BrK    
+    | BRIE   BrK    
+    | BRLO   BrK    
+    | BRLT   BrK    
+    | BRMI   BrK    
+    | BRNE   BrK    
+    | BRPL   BrK    
+    | BRSH   BrK    
+    | BRTC   BrK    
+    | BRTS   BrK    
+    | BRVC   BrK    
+    | BRVS   BrK    
+    | BSET   Bit    
+    | BST    GPR Bit
+    | CALL   Adr    
+    | CBI    IOR Bit
+    | CBR    GPR Wrd
+    | CLC           
+    | CLH           
+    | CLI           
+    | CLN           
+    | CLR    GPR    
+    | CLS           
+    | CLT           
+    | CLV           
+    | CLZ           
+    | COM    GPR    
+    | CP     GPR GPR
+    | CPC    GPR GPR
+    | CPI    GPR Wrd
+    | CPSE   GPR GPR
+    | DEC    GPR    
+    | DES    HWd    
+    | EICALL        
+    | EIJMP         
+    | ELPM0          -- None, R0 implied 
+    | ELPMZ  GPR Z   -- Rd and either Z or Z+
+    | EOR    GPR GPR
+    | FMUL   GPR GPR
+    | FMULS  GPR GPR
+    | FMULSU GPR GPR
+    | ICALL         
+    | IJMP          
+    | IN     GPR IOR
+    | INC    GPR    
+    | JMP    Adr    
+    | LDX    GPR X   -- LD using X register
+    | LDDX   GPR LdQ -- LDD using X register
+    | LDY    GPR Y   -- LD using Y register
+    | LDDY   GPR LdQ -- LDD using Y register
+    | LDI    GPR Imd
+    | LDS    GPR Adr -- 16 bit address or 7 bit address
+    | LPM0
+    | LPMZ   GPR Z
+    | LSL    GPR
+    | LSR    GPR
+    | MOV    GPR GPR
+    | MOVW   GPR GPR -- {0,2..30} {0,2..30}
+    | MUL    GPR GPR
+    | MULS   GPR GPR
+    | MULSU  GPR GPR -- {16 <= d <= 23} {16 <= r <= 23}
+    | NEG    GPR
+    | NOP
+    | OR     GPR GPR
+    | ORI    GPR Imd
+    | OUT    IOR GPR
+    | POP    GPR
+    | PUSH   GPR
+    | RCALL  Adr     -- Adr isn't really appropriate here
+    | RET
+    | RETI
+    | RJUMP  Adr     -- Adr isn't really appropriate here
+    | ROL    GPR
+    | ROR    GPR
+    | SBC    GPR GPR
+    | SBCI   GPR Imd
+    | SBI    IOR Bit
+    | SBIC   IOR Bit
+    | SBIS   IOR Bit
+    | SBIW   GPR Wrd -- d {24,26,28,30}, 0 <= k <= 63
 
 instance Show ISA where
     show (ADC  d r) = prtIS2 "adc"  d r
