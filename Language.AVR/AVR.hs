@@ -1,6 +1,7 @@
 module AVR where
 
 import Text.Printf
+import Data.Word
 
 {-
  - See: http://www.atmel.com/dyn/resources/prod_documents/doc0856.pdf
@@ -71,6 +72,9 @@ mkLdQ q = if 0 <= q && q <= 63
             then LdQ q
             else error $ "Invalid load offset value: " ++ (show q)
 
+
+data W16 = W16 Word16
+    deriving (Show)
 
 -- 8 bit word
 data Wrd = Wrd Int
@@ -184,6 +188,31 @@ data ISA
     | SBIC   IOR Bit
     | SBIS   IOR Bit
     | SBIW   GPR Wrd -- d {24,26,28,30}, 0 <= k <= 63
+    | SBR    GPR Wrd
+    | SBRC   GPR Bit
+    | SBRS   GPR Bit
+    | SEC
+    | SEH
+    | SEI
+    | SEN
+    | SER    GPR
+    | SES
+    | SET
+    | SEV
+    | SEZ
+    | SLEEP
+    | SPMZ   Z
+    | SPM
+    | ST     XY  GPR
+    | STD    LdQ GPR
+    | STS    GPR W16 -- This one is goofy. either 2 or 4 bit opcode. certain limitations.
+    | SUB    GPR GPR
+    | SUBI   GPR Wrd
+    | SWAP   GPR
+    | TST    GPR
+    | WDR
+    
+
 
 instance Show ISA where
     show (ADC  d r) = prtIS2 "adc"  d r
