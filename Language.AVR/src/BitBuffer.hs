@@ -69,11 +69,7 @@ appendL bit  b@(BitBuffer f c l) | l > baseSize = appF
                             len = l + 1
                         }
         appC = if full
-                    then BitBuffer {
-                            filled = (o 0 0) : f,
-                            current = c,
-                            len = l + 1
-                         }
+                    then opF
                     else BitBuffer {
                             filled = f,
                             current = aL c,
